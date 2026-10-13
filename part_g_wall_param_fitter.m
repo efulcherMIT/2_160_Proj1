@@ -15,7 +15,7 @@ end
 
 %% Defining the Error Function for the Fit
 % Remember: Use .* and ./ for element-wise multiplication
-error_function = @(r,alpha,angle,dist) ???;
+error_function = @(r,alpha,angle,dist) dist.*cos(angle - alpha) - r;
 
 %% Setting up the Fit
 % Basics of the fit

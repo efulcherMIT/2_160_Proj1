@@ -24,28 +24,30 @@ alpha_j_map = wall_state(2);
 
 %% Calculation of h
 
-r_j_R_uncorrected = ???;
-alpha_j_R_uncorrected = ???;
+r_j_R_uncorrected = r_j_map - x_R*cos(alpha_j_map) - y_R*sin(alpha_j_map);
+alpha_j_R_uncorrected = alpha_j_map - th_R;
 
-is_r_correct = ???;
+is_r_correct = (r_j_R_uncorrected >= 0); %is r greater or equal to 0
 
 if is_r_correct
-    r_j_R = ???;
-    alpha_j_R = ???;
+    %if r_j >=0 is correct and is same
+    r_j_R = r_j_R_uncorrected;
+    alpha_j_R = alpha_j_R_uncorrected;
 else
-    r_j_R = ???;
-    alpha_j_R = ???;
+    %otherwise must negate r and subtract alpha by pi
+    r_j_R = -r_j_R_uncorrected;
+    alpha_j_R = alpha_j_R_uncorrected - pi;
 end
 
 h_j_R = [r_j_R;alpha_j_R];
 
 %% Calculation of H sub-matrices
 if is_r_correct
-    H_j_R = ???;
-    H_j_map_j = ???;
+    H_j_R = [-cos(alpha_j_map),-sin(alpha_j_map),0;0,0,-1];
+    H_j_map_j = [1,x_R*sin(alpha_j_map)-y_R*cos(alpha_j_map);0,1];
 else
-    H_j_R = ???;
-    H_j_map_j = ???;
+    H_j_R = [cos(alpha_j_map),sin(alpha_j_map),0;0,0,-1];
+    H_j_map_j = [-1,-x_R*sin(alpha_j_map)+y_R*cos(alpha_j_map);0,1];
 end
 
 %% Packing the Struct

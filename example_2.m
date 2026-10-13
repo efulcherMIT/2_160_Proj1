@@ -3,36 +3,41 @@
 % properly answer the questions of Section 2.
 
 %% Part d
-part_d_estimate_state_init = [???;???;???;... %x, y, th
-    ???;???;...%r^1_map, alpha^1_map
-    ???;???;...%r^2_map, alpha^2_map
-    ???;???;...%r^3_map, alpha^3_map
-    ???;???;...%r^4_map, alpha^4_map
-    ???;???;...%r^5_map, alpha^5_map
-    ???;???;...%r^6_map, alpha^6_map
-    ???;???;...%r^7_map, alpha^7_map
-    ???;???;...%r^8_map, alpha^8_map
-    ???;???;...%r^9_map, alpha^9_map
-    ???;??? ...%r^10_map, alpha^10_map
+part_d_estimate_state_init = [1.0;5.0;-4.5*pi/9;... %x, y, th
+    0;pi/2;...%r^1_map, alpha^1_map
+    5;0;...%r^2_map, alpha^2_map
+    4;pi/2;...%r^3_map, alpha^3_map
+    2;0;...%r^4_map, alpha^4_map
+    6;pi/2;...%r^5_map, alpha^5_map
+    0;0;...%r^6_map, alpha^6_map
+    1;pi/2;...%r^7_map, alpha^7_map
+    4;0;...%r^8_map, alpha^8_map
+    3/2;pi/2;...%r^9_map, alpha^9_map
+    7/2;0 ...%r^10_map, alpha^10_map
     ];
-
-part_d_estimate_covariance_init = diag([???,???,???,... %x, y, th
-    ???,???,...%r^1_map, alpha^1_map
-    ???,???,...%r^2_map, alpha^2_map
-    ???,???,...%r^3_map, alpha^3_map
-    ???,???,...%r^4_map, alpha^4_map
-    ???,???,...%r^5_map, alpha^5_map
-    ???,???,...%r^6_map, alpha^6_map
-    ???,???,...%r^7_map, alpha^7_map
-    ???,???,...%r^8_map, alpha^8_map
-    ???,???,...%r^9_map, alpha^9_map
-    ???,??? ...%r^10_map, alpha^10_map
+var_x = 0.25/12;
+var_y = 0.25/12;
+var_theta = (pi/9)^2/12;
+var_r = 0.01^2;
+var_alpha = 0.0283^2;
+part_d_estimate_covariance_init = diag([var_x,var_y,var_theta,... %x, y, th
+    0,0,...%r^1_map, alpha^1_map
+    var_r,var_alpha,...%r^2_map, alpha^2_map
+    var_r,var_alpha,...%r^3_map, alpha^3_map
+    var_r,var_alpha,...%r^4_map, alpha^4_map
+    var_r,var_alpha,...%r^5_map, alpha^5_map
+    0,var_alpha,...%r^6_map, alpha^6_map
+    var_r,var_alpha,...%r^7_map, alpha^7_map
+    var_r,var_alpha,...%r^8_map, alpha^8_map
+    var_r,var_alpha,...%r^9_map, alpha^9_map
+    var_r,var_alpha ...%r^10_map, alpha^10_map
     ]);
 
 %% Part h
 % Manual Single-Scan Plot
 part_h_processed_scan_history.time = scan_struct.general.time;
 part_h_processed_scan_history.time_count = scan_struct.general.time_count;
+part_h_processed_scan_history.time_count
 part_h_processed_scan_history.content = ...
     cell(scan_struct.general.time_count,1);
 

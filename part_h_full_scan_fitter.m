@@ -78,7 +78,7 @@ angles = scan_partition.angles;
 dists = scan_partition.dists;
 
 %% Judgment
-is_ok = ???;
+is_ok = (angle_count > 2); %if we have 3 or more data points
 
 end
 
@@ -89,8 +89,8 @@ meas = wall_params.meas;
 r = wall_params.r;
 alpha = wall_params.alpha;
 covar = wall_params.covariance;
-
+cov_min = 100000;
 %% Judgment
-is_ok = ???;
+is_ok = (covar < cov_min);
 
 end
