@@ -89,8 +89,11 @@ meas = wall_params.meas;
 r = wall_params.r;
 alpha = wall_params.alpha;
 covar = wall_params.covariance;
-cov_min = 100000;
+
 %% Judgment
-is_ok = (covar < cov_min);
+param_std = sqrt(diag(covar)); %finding the diag std, each params standard deviation
+std_alpha_max = 0.0283;
+std_r_max = 0.01;
+is_ok = ((param_std(1) < std_r_max) && (param_std(2) < std_alpha_max));
 
 end

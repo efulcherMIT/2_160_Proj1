@@ -29,20 +29,23 @@ end
 
 %% Generate Predicted Observation Vector and Matrix
 observation_vector = NaN(2*obs_wall_count,1);
+
 observation_matrix = zeros(2*obs_wall_count,state_length);
+
 %this will generate the H matrix given the walls we can see
 for obs_wall_it = 1:obs_wall_count
     wall_id = obs_walls_list(obs_wall_it);
-
+    
     %wall id will be our iterator
-    %output indicies = wall_id*2+1:wall_id*2+2
-    %input indicies = wall_id*2+3+1:wall_id*2+3+2 as the input includes the state of the robot 
-    obs_wall_output_indices = (wall_id*2+1):(wall_id*2+2);
-    obs_wall_input_indices = (wall_id*2+3+1):(wall_id*2+3+2);
+    %output indicies = (obs_wall_it-1)*2+1:(obs_wall_it-1)*2+2
+    %input indicies = (wall_id-1)*2+3+1:(wall_id-1)*2+3+2 as the input includes the state of the robot 
+    % obs_wall_output_indices = (wall_id*2+1):(wall_id*2+2);
+    % obs_wall_input_indices = (wall_id*2+3+1):(wall_id*2+3+2);
+    obs_wall_output_indices = ((obs_wall_it-1)*2+1):((obs_wall_it-1)*2+2);
+    obs_wall_input_indices = ((wall_id-1)*2+3+1):((wall_id-1)*2+3+2);
 
     wall_obs = part_e_observation_function_1_wall(...
         robot_state,walls_state{wall_id});
-
     observation_vector(obs_wall_output_indices) = wall_obs.observation;
     observation_matrix(obs_wall_output_indices,1:3) = wall_obs.H_R;
     observation_matrix(obs_wall_output_indices,obs_wall_input_indices)...

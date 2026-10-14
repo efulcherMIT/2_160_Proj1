@@ -17,13 +17,16 @@ innov = innovation_info.innovation;
 H = innovation_info.observation_matrix;
 
 %% Calculate the Kalman Gain
-K = ???;
+
+K = covar_prev*H'*inv(S);
 
 %% Calculate the State Estimate Update
-state_next = ???;
+%X_hat_t = X_hat_t_tm1 + K*(y - y_hat)
+state_next = state_prev + K*innov;
 
 %% Calculate the State Estimate Covariance Update
-covar_next = ???;
+%we dont need to do the covariance propogation as it is handled by the kalman predict
+covar_next = (eye(size(K*H,1)) - K*H)*covar_prev;
 
 %% Packing the Struct
 state_estimate_next.state = state_next;

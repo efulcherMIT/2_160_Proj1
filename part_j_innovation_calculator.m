@@ -7,7 +7,6 @@ function [innovation_info, fitted_labeled_scan] = ...
 %% Deconstructing the Struct
 state = state_estimate.state;
 state_covariance = state_estimate.covariance;
-
 %% Fit Parameters to the Scan
 fitted_labeled_scan = part_h_full_scan_fitter(scan);
 
@@ -25,12 +24,10 @@ y_hat = predicted_walls_observation.vector;
 %% Constructing the Measured Walls Observation
 partition_count = fitted_labeled_scan.partition_count;
 param_fits = fitted_labeled_scan.fits;
-
 y_vec = NaN(2*partition_count,1);
 R_mat = zeros(2*partition_count);
-
 for it = 1:partition_count
-    inds = (???):(???);
+    inds = (it-1)*2+1:(it-1)*2+2;
     y_vec(inds) = param_fits{it}.meas;
     R_mat(inds,inds) = param_fits{it}.covariance;
 end
@@ -39,7 +36,9 @@ end
 innovation = innovation_subtract(y_vec,y_hat);
 
 %% Calculate the Innovation Covariance
-S_mat = ???;
+%S_t = H_t * P_t_tm1*H_t' + R_t
+P_t_tm1 = state_covariance; %curr cov from previous step
+S_mat = H_mat*P_t_tm1*H_mat'+R_mat;
 
 %% Packing the Struct
 innovation_info.innovation = innovation;
@@ -57,9 +56,9 @@ item_count = length(measurement);
 innovation = NaN(item_count,1);
 for it = 1:item_count
     if mod(it,2)==1 %r
-        innovation(it) = ???;
+        innovation(it) = measurement(it) - predicted_measurement(it);
     else %alpha
-        innovation(it) = ???;
+        innovation(it) = angle_subtract(measurement(it),predicted_measurement(it));
     end
 end
 

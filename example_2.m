@@ -1,7 +1,7 @@
 % Example code relevant to implementing Section 2: SLAM.
 % Script-level code may require significant modification and expansion to 
 % properly answer the questions of Section 2.
-
+clc;
 %% Part d
 part_d_estimate_state_init = [1.0;5.0;-4.5*pi/9;... %x, y, th
     0;pi/2;...%r^1_map, alpha^1_map
@@ -74,7 +74,9 @@ wheel_prev.left = data_struct.general.content{1}.s_left;
 
 % All other time points: new information from data, and we use it
 for time_iter = 2:part_k_time_count
+    
     data_type = data_struct.general.content{time_iter}.type;
+    
     if isequal(data_type,'odom')
         % Figure out how much the wheels have turned
         wheel_next.right = data_struct.general.content{time_iter}.s_right;

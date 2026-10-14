@@ -108,7 +108,7 @@ alpha = sols.alpha;
 r = sols.r;
 alpha
 r
-%% WALL 9
+%% WALL 10
 fprintf("\nWALL 10\n")
 x_p1 = 3.5;
 y_p1 = 1.5;
